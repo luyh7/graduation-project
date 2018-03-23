@@ -1,0 +1,17 @@
+﻿题目：互联网视频网站视频文件观看次数的特征分析
+研究意义：目前，互联网中视频文件的传输占住着网络信息流的很大一部分。对网络视频文件的观看次数特征进行分析，有助于互联网服务提供商更好地配置文件缓存，从而减少网络的拥塞状况，提高用户体验。
+
+研究内容：对互联网某视频网站存储的文件进行分析，主要包括：
+1.分析视频文件观看次数的概率分布特征；
+2.分析视频文件时长的概率分布特征；
+3.分析视频的观看次数与视频文件时长之间的关系；
+4.分析视频文件观看次数与用户评价总次数之间的关系；
+5.分析视频文件观看次数与用户评分高低之间的关系。
+
+
+注：数据格式：
+?  Format: url | length | views | ratings | stars 
+?  Example: /watch?v=abc|01:30|100|5|4.0 
+格式说明：This trace provides meta-information of all the videos in Entertainment category. Each line represents a single video. The example above indicates that the length of video /watch?v=abc is 1:30 or 90 seconds and this video was viewed 100 times. 5 users rated this video and the average score of rating was 4.0. Please note that there may be empty fields in our traces. 
+
+参考文献：M.Cha, H. Kwak, P. Rodriguez, Y. Ahn, S. Moon. I Tube, You Tube, Everybody Tubes: Analyzing the World’s Largest User Generated Content Video System.Proceedings of the 7th ACM SIGCOMM conference on Internet measurement,1-14.
