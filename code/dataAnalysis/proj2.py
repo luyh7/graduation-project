@@ -12,31 +12,31 @@ with open('dataset.txt', 'r') as f:
         line = line.split('|');
         dataProcessed = {};
         dataProcessed['url'] = line[0];
-        dataProcessed['length'] = line[1];
-        dataProcessed['views'] = line[2];
-        dataProcessed['ratings'] = line[3];
-        dataProcessed['stars'] = line[4].replace('\n','');
+
+        # 将时长字符串转换为整型，单位为秒
+        lengthOfInt = 0;
+        for l in line[1].split(':'):
+            lengthOfInt *= 60;
+            lengthOfInt += int(l);
+        dataProcessed['length'] = lengthOfInt;
+
+        dataProcessed['views'] = int(line[2]);
+        dataProcessed['ratings'] = int(line[3]);
+        dataProcessed['stars'] = int(float(line[4].replace('\n','')) * 10);
         dataset.append(dataProcessed);
 print(dataset[0]);
+
 
 # 提取特征属性length
 countForLength = np.zeros(np.power(10, powerRank));
 index = 0;
 for line in dataset:
-    length = str(line['length']);
-    lengthSplit = length.split(':');
-
-    # 将时长字符串转换为整型，单位为秒
-    lengthOfInt = 0;
-    for l in lengthSplit:
-        lengthOfInt *= 60;
-        lengthOfInt += int(l);
-
+    lengthOfInt = line['length'];
     if lengthOfInt >= np.power(10, powerRank) - 1:
         continue;
 
     # print(str(lengthOfInt) + ',' + length)
-    countForLength[lengthOfInt] += 1;
+    countForLength[lengthOfInt] += line['views'];
     if index % (len(dataset)/10) == 0:
         print("running... " + str(index / (len(dataset)/10)) + "0%");
     index += 1;

@@ -2,6 +2,7 @@
 # 分析视频文件观看次数的概率分布特征
 import numpy as np;
 import matplotlib.pyplot as plt;
+import myplot;
 
 # 数据数量级
 powerRank = 7;
@@ -33,16 +34,13 @@ for i in reversed(range(0,np.power(10, powerRank) - 1)):
     viewTimes[i] = viewTimes[i] + viewTimes[i+1];
 
 x = range(0,np.power(10, powerRank));
-for i in range(0,np.power(10, powerRank)):
-    if x[i] > 0:
-        x[i] = np.log10(x[i]);
 
 y = viewTimes;
-for i in range(0,np.power(10, powerRank)):
-    if y[i] > 0:
-        y[i] = np.log10(y[i]);
 
 # 画图
+myplot.plot(x, y, label='count', xlabel='Views', ylabel='Number of views with >= x views', xAxieIsLog=True, yAxieIsLog=True);
+
+
 print("plotting...");
 plt.figure(figsize=(8,5));
 plt.plot(x, y, label='count', linewidth=1);
