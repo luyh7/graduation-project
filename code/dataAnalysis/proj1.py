@@ -30,6 +30,7 @@ for line in dataset:
         print("running... " + str(index / (len(dataset)/10)) + "0%");
     index += 1;
 
+# 计算累积值
 for i in reversed(range(0,np.power(10, powerRank) - 1)):
     viewTimes[i] = viewTimes[i] + viewTimes[i+1];
 
@@ -39,12 +40,3 @@ y = viewTimes;
 
 # 画图
 myplot.plot(x, y, label='count', xlabel='Views', ylabel='Number of views with >= x views', xAxieIsLog=True, yAxieIsLog=True);
-
-
-print("plotting...");
-plt.figure(figsize=(8,5));
-plt.plot(x, y, label='count', linewidth=1);
-plt.xlabel('Views');
-plt.ylabel('Number of views with >= x views');
-plt.legend();
-plt.show();

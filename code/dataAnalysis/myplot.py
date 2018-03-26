@@ -23,3 +23,11 @@ def plot(x, y, label='', linewidth=1, xlabel='', ylabel='', xAxieIsLog=False, yA
     plt.legend();
     plt.show();
     return;
+
+def normalize(y):
+    sumy = 0;
+    for i in range(0, len(y)):
+        sumy += y[i];
+    for i in range(0, len(y)):
+        y[i] = float(y[i]) / sumy;
+    return;
