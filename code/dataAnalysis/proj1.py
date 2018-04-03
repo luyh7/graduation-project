@@ -31,12 +31,12 @@ for line in dataset:
     index += 1;
 
 # 计算累积值
-for i in reversed(range(0,np.power(10, powerRank) - 1)):
-    viewTimes[i] = viewTimes[i] + viewTimes[i+1];
+for i in range(1,np.power(10, powerRank) ):
+    viewTimes[i] = viewTimes[i] + viewTimes[i-1];
 
 x = range(0,np.power(10, powerRank));
 
 y = viewTimes;
 
 # 画图
-myplot.plot(x, y, label='count', xlabel='Views', ylabel='Number of views with >= x views', xAxieIsLog=True, yAxieIsLog=True);
+myplot.plot(x, y, label='count', xlabel='Views', ylabel='Number of views with <= x views', xAxieIsLog=True, yAxieIsLog=True);

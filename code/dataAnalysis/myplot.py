@@ -6,28 +6,33 @@ def plot(x, y, label='', linewidth=1, xlabel='', ylabel='', xAxieIsLog=False, yA
     # 画图
     print("plotting...");
 
-    if xAxieIsLog:
-        for i in range(0, len(x)):
-            if x[i] > 0:
-                x[i] = np.log10(x[i]);
 
-    if yAxieIsLog:
-        for i in range(0, len(y)):
-            if y[i] > 0:
-                y[i] = np.log10(y[i]);
 
     plt.figure(figsize=(8, 5));
     plt.plot(x, y, label=label, linewidth=linewidth);
     plt.xlabel(xlabel);
     plt.ylabel(ylabel);
+
+    if xAxieIsLog:
+        plt.xscale('log')
+        # for i in range(0, len(x)):
+        #     if x[i] > 0:
+        #         x[i] = np.log10(x[i]);
+
+    if yAxieIsLog:
+        plt.yscale('log')
+        # for i in range(0, len(y)):
+        #     if y[i] > 0:
+        #         y[i] = np.log10(y[i]);
+
     plt.legend();
     plt.show();
     return;
 
-def normalize(y):
-    sumy = 0;
-    for i in range(0, len(y)):
-        sumy += y[i];
-    for i in range(0, len(y)):
-        y[i] = float(y[i]) / sumy;
-    return;
+# def (y):
+#     sumy = 0;
+#     for i in range(0, len(y)):
+#         sumy += y[i];
+#     for i in range(0, len(y)):
+#         y[i] = float(y[i]) / sumy;
+#     return;
