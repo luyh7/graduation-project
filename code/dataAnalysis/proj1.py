@@ -25,18 +25,45 @@ viewTimes = np.zeros(np.power(10, powerRank));
 index = 0;
 for line in dataset:
     views = int(line['views']);
-    viewTimes[views/10] += 1;
+    viewTimes[views] += 1;
     if index % (len(dataset)/10) == 0:
         print("running... " + str(index / (len(dataset)/10)) + "0%");
     index += 1;
 
 # 计算累积值
-for i in range(1,np.power(10, powerRank) ):
-    viewTimes[i] = viewTimes[i] + viewTimes[i-1];
+# for i in reversed(range(0,np.power(10, powerRank)-1 )):
+#     viewTimes[i] = viewTimes[i] + viewTimes[i+1];
+# for i in range(1, np.power(10, powerRank)):
+#     viewTimes[i] = viewTimes[i] + viewTimes[i-1];
 
 x = range(0,np.power(10, powerRank));
 
 y = viewTimes;
 
+z = range(0,np.power(10, powerRank));
+
+for i in x:
+    z[i] = y[i] * i;
+
+# 计算累积值
+for i in range(1, np.power(10, powerRank)):
+    z[i] = z[i] + z[i-1];
+
+# 去掉 y = 0的点
+xx = [];
+yy = [];
+for i in x:
+    if y[i] != 0:
+        xx.append(x[i]);
+        yy.append(y[i]);
+
+print("data size: " + len(xx).__str__())
 # 画图
-myplot.plot(x, y, label='count', xlabel='Views', ylabel='Number of views with <= x views', xAxieIsLog=True, yAxieIsLog=True);
+
+#fig1_1
+myplot.plot(xx, yy, label='', xlabel='Views', ylabel='Number of videos', xAxieIsLog=True, yAxieIsLog=False);
+
+#fig1_2
+# myplot.plot(x, y, label='', xlabel='Views', ylabel='Aggregation of views where views <= x', xAxieIsLog=True, yAxieIsLog=False);
+
+# myplot.scatter(x, z, label='count', xlabel='Views', ylabel='Number of video', xAxieIsLog=True, yAxieIsLog=False);

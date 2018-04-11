@@ -1,8 +1,8 @@
 # coding: utf8
 # 分析视频文件时长的概率分布特征
 import myplot;
-import numpy as np;
-from scipy import stats as ss
+# import numpy as np;
+# from scipy import stats as ss
 # 数据数量级
 powerRank = 2;
 # 数据预处理
