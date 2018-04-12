@@ -42,6 +42,8 @@ for line in dataset:
         print("running... " + str(index / (len(dataset) / 10)) + "0%");
     index += 1;
 
+y = viewTimes;
+
 # 取平均值
 for i in range(0, np.power(10, powerRank)):
     if(not(countOfLength[i] == 0)):
@@ -53,7 +55,11 @@ for i in reversed(range(0,np.power(10, powerRank) - 1)):
 
 x = range(0, np.power(10, powerRank));
 
-y = viewTimes;
-myplot.plot(x, y, label='count', xlabel='Length', ylabel='Average views with length >= x', xAxieIsLog=True, yAxieIsLog=False, powerRank=powerRank);
+avrgY = viewTimes;
+
+#fig3_1
+myplot.plot(x, y, label='', xlabel='Length', ylabel='Views', xAxieIsLog=True, yAxieIsLog=False, powerRank=powerRank);
+
+# myplot.plot(x, avrgY, label='count', xlabel='Length', ylabel='Average views with length >= x', xAxieIsLog=True, yAxieIsLog=False, powerRank=powerRank);
 
 

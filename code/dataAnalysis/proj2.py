@@ -50,9 +50,9 @@ for line in dataset:
         lengthOfLog.append(np.log10(lengthOfInt));
 
 x = range(0, np.power(10, powerRank));
-for i in range(0, np.power(10, powerRank)):
-    if x[i] > 0:
-        x[i] = np.log10(x[i]);
+# for i in range(0, np.power(10, powerRank)):
+#     if x[i] > 0:
+#         x[i] = np.log10(x[i]);
 
 #使用累积值
 # for i in reversed(range(0,np.power(10, powerRank) - 1)):
@@ -68,37 +68,42 @@ myplot.normalize(y);
 #     if y[i] > 0:
 #         y[i] = np.log10(y[i]);
 
-print('fitting...')
-# 重新取样以拟合
-sampleX = range(0, powerRank * 100);
-for i in range(0, powerRank * 100):
-    sampleX[i] = sampleX[i] * 0.01;
+# print('fitting...')
+# # 重新取样以拟合
+# sampleX = range(0, powerRank * 100);
+# for i in range(0, powerRank * 100):
+#     sampleX[i] = sampleX[i] * 0.01;
+#
+# # sampleY = []
+# # for i in sampleX:
+# #     sampleY.append(y[int(math.pow(10, i))]);
+#
+# sampleY = lengthOfLog;
+#
+# # 拟合
+# params = ss.norm.fit(sampleY);
+# norm = ss.norm.pdf(sampleX, loc=params[0], scale=params[1]);
+# print (params);
+# sum = 0;
+# for i in range(0, len(norm)):
+#     norm[i] /= 100;
+#     sum += norm[i];
+# print sum;
 
-# sampleY = []
-# for i in sampleX:
-#     sampleY.append(y[int(math.pow(10, i))]);
-
-sampleY = lengthOfLog;
-
-# 拟合
-params = ss.norm.fit(sampleY);
-norm = ss.norm.pdf(sampleX, loc=params[0], scale=params[1]);
-print (params);
-sum = 0;
-for i in range(0, len(norm)):
-    norm[i] /= 100;
-    sum += norm[i];
-print sum;
+#使用累积值
+ysum = y
+for i in range(1, np.power(10, powerRank)):
+    ysum[i] = ysum[i] + ysum[i-1]
 
 # 画图
 # myplot.plot(x, y, label='count', xlabel='Length', ylabel='Views', xAxieIsLog=True, yAxieIsLog=False);
 print("plotting...");
-plt.figure(figsize=(8,5));
-plt.plot(x, y, label='Source data', linewidth=1);
-plt.plot(sampleX, norm, label='Normal distribution', linewidth=1, color='red');
+# fig2_1
+# myplot.plot(x, y, xlabel='Length', ylabel='Count', label='Source data', linewidth=1, xAxieIsLog=True, deleteZero=False);
+
+# fig2_2
+myplot.plot(x, ysum, xlabel='Length', ylabel='Aggregation of videos', label='', linewidth=1, xAxieIsLog=True, deleteZero=False);
+# plt.plot(sampleX, norm, label='Normal distribution', linewidth=1, color='red');
+
 # plt.plot(sampleX, sampleY, color='green', label='count', linewidth=1);
-plt.xlabel('Length');
 # plt.ylabel('Count for length >= x');
-plt.ylabel('Count');
-plt.legend();
-plt.show();

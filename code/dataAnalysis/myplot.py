@@ -2,36 +2,53 @@
 import numpy as np;
 import matplotlib.pyplot as plt;
 
-def plot(x, y, label='', linewidth=1, xlabel='', ylabel='', xAxieIsLog=False, yAxieIsLog=False, powerRank=8):
+#画折线图
+def plot(x, y, label='', linewidth=1, xlabel='', ylabel='', xAxieIsLog=False, yAxieIsLog=False, deleteZero=False, powerRank=8):
     # 画图
     print("plotting...");
 
+    print("\tdelete zero...")
+    # 去掉 y = 0 的点,加快绘图速度
+    if deleteZero:
+        xx = [];
+        yy = [];
+        for i in x:
+            if y[i] != 0:
+                xx.append(x[i]);
+                yy.append(y[i]);
+        x = xx;
+        y = yy;
 
+    print("\tdata size is %d" % (len(x)))
 
     # plt.figure(figsize=(8, 5));
     plt.plot(x, y, label=label, linewidth=linewidth);
     plt.xlabel(xlabel);
     plt.ylabel(ylabel);
 
+    plt.xlim(xmin=0)
+    plt.ylim(ymin=0)
+
     if xAxieIsLog:
         plt.xscale('log')
+        plt.xlim(xmin=1)
         # for i in range(0, len(x)):
         #     if x[i] > 0:
         #         x[i] = np.log10(x[i]);
 
     if yAxieIsLog:
         plt.yscale('log')
+        plt.ylim(ymin=1)
         # for i in range(0, len(y)):
         #     if y[i] > 0:
         #         y[i] = np.log10(y[i]);
 
-    plt.xlim(xmin=1)
-    plt.ylim(ymin=1)
     # plt.grid();
     plt.legend();
     plt.show();
     return;
 
+# 画散点图
 def scatter(x, y, label='', linewidth=1, xlabel='', ylabel='', xAxieIsLog=False, yAxieIsLog=False, powerRank=8):
     # 画图
     print("plotting...");
@@ -43,32 +60,37 @@ def scatter(x, y, label='', linewidth=1, xlabel='', ylabel='', xAxieIsLog=False,
     plt.xlabel(xlabel);
     plt.ylabel(ylabel);
 
+    plt.xlim(xmin=0)
+    plt.ylim(ymin=0)
+
     if xAxieIsLog:
         plt.xscale('log')
+        plt.xlim(xmin=1)
         # for i in range(0, len(x)):
         #     if x[i] > 0:
         #         x[i] = np.log10(x[i]);
 
     if yAxieIsLog:
         plt.yscale('log')
+        plt.ylim(ymin=1)
         # for i in range(0, len(y)):
         #     if y[i] > 0:
         #         y[i] = np.log10(y[i]);
 
-    plt.xlim(xmin=1)
-    plt.ylim(ymin=1)
+
     # plt.grid();
     plt.legend();
     plt.show();
     return;
 
-# def (y):
-#     sumy = 0;
-#     for i in range(0, len(y)):
-#         sumy += y[i];
-#     for i in range(0, len(y)):
-#         y[i] = float(y[i]) / sumy;
-#     return;
+#定义归一化方法
+def normalize(y):
+    sumy = 0;
+    for i in range(0, len(y)):
+        sumy += y[i];
+    for i in range(0, len(y)):
+        y[i] = float(y[i]) / sumy;
+    return;
 
 
 

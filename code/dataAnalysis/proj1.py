@@ -49,7 +49,7 @@ for i in x:
 for i in range(1, np.power(10, powerRank)):
     z[i] = z[i] + z[i-1];
 
-# 去掉 y = 0的点
+# 去掉 y = 0 的点,加快绘图速度
 xx = [];
 yy = [];
 for i in x:
