@@ -27,6 +27,7 @@ print(dataset[0]);
 
 # 提取特征属性views
 viewTimes = np.zeros(11);
+countOfstars = np.zeros(11);
 index = 0;
 for line in dataset:
     stars = line['stars'];
@@ -34,7 +35,7 @@ for line in dataset:
     # 减少噪点
     # if lengthOfInt >= np.power(10, powerRank) - 1:
     #     continue;
-
+    countOfstars[stars / 5] += 1;
     viewTimes[stars / 5] += int(line['views']);
     if index % (len(dataset) / 10) == 0:
         print("running... " + str(index / (len(dataset) / 10)) + "0%");
@@ -44,9 +45,15 @@ for line in dataset:
 # for i in reversed(range(0,np.power(10, powerRank) - 1)):
 #     viewTimes[i] = viewTimes[i] + viewTimes[i+1];
 
+# 取平均值
+avrgY = list(viewTimes);
+for i in range(0, 11):
+    if(not(countOfstars[i] == 0)):
+        avrgY[i] /= countOfstars[i];
+
 x = range(0, 11);
 
-y = viewTimes;
+y = list(viewTimes);
 myplot.plot(x, y, label='count', xlabel='Stars', ylabel='Views', xAxieIsLog=False, yAxieIsLog=True);
 
-
+myplot.plot(x, avrgY, label='count', xlabel='Stars', ylabel='Average of views', xAxieIsLog=False, yAxieIsLog=True);

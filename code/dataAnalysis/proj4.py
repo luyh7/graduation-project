@@ -27,6 +27,8 @@ print(dataset[0]);
 
 # 提取特征属性views
 viewTimes = np.zeros(np.power(10, powerRank));
+countOfRatings = np.zeros(np.power(10, powerRank));
+
 index = 0;
 for line in dataset:
     ratings = line['ratings'];
@@ -34,19 +36,45 @@ for line in dataset:
     # 减少噪点
     # if lengthOfInt >= np.power(10, powerRank) - 1:
     #     continue;
-
+    countOfRatings[ratings] += 1;
     viewTimes[ratings] += int(line['views']);
     if index % (len(dataset) / 10) == 0:
         print("running... " + str(index / (len(dataset) / 10)) + "0%");
     index += 1;
 
 #使用累积值
-for i in reversed(range(0,np.power(10, powerRank) - 1)):
-    viewTimes[i] = viewTimes[i] + viewTimes[i+1];
+sumy = list(viewTimes)
+myplot.normalize(sumy)
+for i in range(1, np.power(10, powerRank)):
+    sumy[i] = sumy[i] + sumy[i-1];
+
+# 取平均值
+avrgY = list(viewTimes);
+for i in range(0, np.power(10, powerRank)):
+    if(not(countOfRatings[i] == 0)):
+        avrgY[i] /= countOfRatings[i];
+
+# 使用累积平均值
+avrg_sumY = list(avrgY);
+myplot.normalize(avrg_sumY)
+for i in range(1, np.power(10, powerRank)):
+    avrg_sumY[i] = avrg_sumY[i] + avrg_sumY[i - 1];
 
 x = range(0, np.power(10, powerRank));
 
-y = viewTimes;
-myplot.plot(x, y, label='count', xlabel='Ratings', ylabel='Number of views with >= x ratings', xAxieIsLog=True, yAxieIsLog=False, powerRank=powerRank);
+y = list(viewTimes);
+print(y[0]);
+print(y[1])
+
+#fig4_1
+# myplot.plot(x, y, label='', xlabel='Ratings', ylabel='Views', xAxieIsLog=True, yAxieIsLog=False, powerRank=powerRank);
+
+#fig4_2
+# myplot.plot(x, sumy, label='', xlabel='Ratings', ylabel='Aggregation of views with <= x ratings', xAxieIsLog=True, yAxieIsLog=False, powerRank=powerRank);
 
 
+#fig4_3
+# myplot.plot(x, avrgY, label='', xlabel='Ratings', ylabel='Average views', xAxieIsLog=True, yAxieIsLog=False, powerRank=powerRank);
+
+#fig4_4
+myplot.plot(x, avrg_sumY, label='', xlabel='Ratings', ylabel='Aggregation of average views', xAxieIsLog=True, yAxieIsLog=False, powerRank=powerRank);

@@ -42,24 +42,40 @@ for line in dataset:
         print("running... " + str(index / (len(dataset) / 10)) + "0%");
     index += 1;
 
-y = viewTimes;
+y = list(viewTimes);
 
-# 取平均值
-for i in range(0, np.power(10, powerRank)):
-    if(not(countOfLength[i] == 0)):
-        viewTimes[i] /= countOfLength[i];
 
 #使用累积值
-for i in reversed(range(0,np.power(10, powerRank) - 1)):
-    viewTimes[i] = viewTimes[i] + viewTimes[i+1];
+sumy = list(viewTimes);
+myplot.normalize(sumy)
+for i in range(1, np.power(10, powerRank)):
+    sumy[i] = sumy[i] + sumy[i-1];
+
+# 取平均值
+avrgY = list(viewTimes);
+for i in range(0, np.power(10, powerRank)):
+    if(not(countOfLength[i] == 0)):
+        avrgY[i] /= countOfLength[i];
+
+# 使用累积平均值
+avrg_sumY = list(avrgY);
+myplot.normalize(avrg_sumY)
+for i in range(1, np.power(10, powerRank)):
+    avrg_sumY[i] = avrg_sumY[i] + avrg_sumY[i - 1];
 
 x = range(0, np.power(10, powerRank));
 
-avrgY = viewTimes;
 
 #fig3_1
-myplot.plot(x, y, label='', xlabel='Length', ylabel='Views', xAxieIsLog=True, yAxieIsLog=False, powerRank=powerRank);
+# myplot.bar(x, y, label='', xlabel='Length', ylabel='Views', xAxieIsLog=True, yAxieIsLog=False, powerRank=powerRank, deleteZero=True);
 
-# myplot.plot(x, avrgY, label='count', xlabel='Length', ylabel='Average views with length >= x', xAxieIsLog=True, yAxieIsLog=False, powerRank=powerRank);
+#fig3_2
+# myplot.plot(x, sumy, label='', xlabel='Length', ylabel='Aggregation of views rate', xAxieIsLog=True, yAxieIsLog=False, powerRank=powerRank, deleteZero=False);
+
+#fig3_3
+# myplot.plot(x, avrgY, label='count', xlabel='Length', ylabel='Average views', xAxieIsLog=True, yAxieIsLog=False, powerRank=powerRank, deleteZero=True);
+
+#fig3_4
+myplot.plot(x, avrg_sumY, label='count', xlabel='Length', ylabel='Aggregation of average views rate', xAxieIsLog=True, yAxieIsLog=False, powerRank=powerRank, deleteZero=True);
 
 
